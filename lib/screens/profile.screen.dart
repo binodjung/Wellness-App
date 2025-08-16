@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wellness_app/screens/dashboard_screen.dart';
-import 'package:wellness_app/screens/login_screen.dart';  // Make sure to import LoginScreen
+import 'package:wellness_app/screens/login_screen.dart';
 import 'package:wellness_app/content/content_preference.dart';
+import 'package:wellness_app/passwords/forgotpassword.dart';
+import 'package:wellness_app/passwords/newpassword.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -15,10 +17,10 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(
+        title: const Text(
           'Profile',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
@@ -29,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Profile container with image and texts
+            // Profile container
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
               decoration: BoxDecoration(
@@ -41,7 +43,7 @@ class ProfileScreen extends StatelessWidget {
                   Container(
                     width: 80.r,
                     height: 80.r,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: AssetImage('assets/images/profile.jpeg'),
@@ -77,7 +79,6 @@ class ProfileScreen extends StatelessWidget {
 
             SizedBox(height: 30.h),
 
-            // MAKE IT YOURS text bold
             Text(
               'MAKE IT YOURS',
               style: TextStyle(
@@ -86,15 +87,14 @@ class ProfileScreen extends StatelessWidget {
                 fontSize: 16.sp,
               ),
             ),
-
             SizedBox(height: 15.h),
 
-            // Content preferences container with GestureDetector for navigation
+            // Content Preference
             GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ContentPreference()),
+                  MaterialPageRoute(builder: (_) => const ContentPreference()),
                 );
               },
               child: Container(
@@ -110,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                     SizedBox(width: 20.w),
                     Expanded(
                       child: Text(
-                        'content preferences',
+                        'Content Preferences',
                         style: TextStyle(color: Colors.white, fontSize: 16.sp),
                       ),
                     ),
@@ -122,7 +122,6 @@ class ProfileScreen extends StatelessWidget {
 
             SizedBox(height: 30.h),
 
-            // ACCOUNT text
             Text(
               'ACCOUNT',
               style: TextStyle(
@@ -131,7 +130,6 @@ class ProfileScreen extends StatelessWidget {
                 fontSize: 14.sp,
               ),
             ),
-
             SizedBox(height: 15.h),
 
             // Theme container
@@ -159,38 +157,45 @@ class ProfileScreen extends StatelessWidget {
 
             SizedBox(height: 15.h),
 
-            // Forgot Password container
-            Container(
-              height: 70.h,
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade900,
-                borderRadius: BorderRadius.circular(30.r),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.lock_outline, color: Colors.white, size: 28.sp),
-                  SizedBox(width: 20.w),
-                  Expanded(
-                    child: Text(
-                      'Forgot Password',
-                      style: TextStyle(color: Colors.white, fontSize: 16.sp),
+            // Forgot Password container wrapped properly
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ForgotPasswordPage()),
+                );
+              },
+              child: Container(
+                height: 70.h,
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade900,
+                  borderRadius: BorderRadius.circular(30.r),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.lock_outline, color: Colors.white, size: 28.sp),
+                    SizedBox(width: 20.w),
+                    Expanded(
+                      child: Text(
+                        'Forgot Password',
+                        style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                      ),
                     ),
-                  ),
-                  Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18.sp),
-                ],
+                    Icon(Icons.arrow_forward_ios, color: Colors.white, size: 18.sp),
+                  ],
+                ),
               ),
             ),
 
             SizedBox(height: 15.h),
 
-            // Logout container wrapped with GestureDetector properly
+            // Logout container
             GestureDetector(
               onTap: () {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (_) => const LoginScreen()),
-                  //onTap sets to LoginScreen
                 );
               },
               child: Container(
