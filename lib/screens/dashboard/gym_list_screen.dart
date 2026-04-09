@@ -54,7 +54,7 @@ class GymListScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           final gym = gyms[index];
           return Container(
-            margin: EdgeInsets.bottom(20.h),
+            margin: EdgeInsets.only(bottom: 20.h),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(20.r),
