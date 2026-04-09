@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:wellness_app/screens/login_screen.dart';
-import 'package:wellness_app/screens/signup_screen.dart';
-import 'package:wellness_app/screens/dashboard_screen.dart';
-import 'package:wellness_app/screens/quote_detail_screen.dart';
+import 'package:wellness_app/screens/auth/login_screen.dart';
+import 'package:wellness_app/screens/auth/signup_screen.dart';
+import 'package:wellness_app/screens/dashboard/dashboard_screen.dart';
+import 'package:wellness_app/screens/quotes/quote_detail_screen.dart';
 
 void main() {
   runApp(const WellnessApp());
