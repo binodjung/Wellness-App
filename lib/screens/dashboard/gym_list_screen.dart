@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wellness_app/core/favorites_controller.dart';
 
 class GymListScreen extends StatelessWidget {
   const GymListScreen({super.key});
@@ -13,11 +14,18 @@ class GymListScreen extends StatelessWidget {
       'details': 'Modern equipment, personal trainers, and yoga studio.',
     },
     {
-      'name': 'Power Zone Gym',
+      'name': 'Iron Works Gym',
       'distance': '1.2 km',
+      'rating': '4.9',
+      'image': 'https://images.unsplash.com/photo-1581009146145-b5ef03a7403f?q=80&w=2070&auto=format&fit=crop', // Real industrial gym photo
+      'details': 'Heavy lifting, powerlifting racks, and expert strength coaching.',
+    },
+    {
+      'name': 'Power Zone Gym',
+      'distance': '1.5 km',
       'rating': '4.5',
       'image': 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1975&auto=format&fit=crop',
-      'details': 'Focus on heavy lifting and bodybuilding. 24/7 access.',
+      'details': 'Focus on bodybuilding. 24/7 access.',
     },
     {
       'name': 'Active Life Center',
@@ -25,13 +33,6 @@ class GymListScreen extends StatelessWidget {
       'rating': '4.3',
       'image': 'https://images.unsplash.com/photo-1593079831268-3381b0db4a77?q=80&w=2069&auto=format&fit=crop',
       'details': 'Cardio focus, swimming pool, and group classes.',
-    },
-    {
-      'name': 'Iron Works Gym',
-      'distance': '3.1 km',
-      'rating': '4.7',
-      'image': 'https://images.unsplash.com/photo-1581009146145-b5ef03a7403f?q=80&w=2070&auto=format&fit=crop',
-      'details': 'Old school gym experience with expert coaches.',
     },
     {
       'name': 'Zenith Wellness Gym',
@@ -73,7 +74,7 @@ class GymListScreen extends StatelessWidget {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
                   child: Image.network(
                     gym['image']!,
-                    height: 150.h,
+                    height: 180.h,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -86,15 +87,35 @@ class GymListScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            gym['name']!,
-                            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                          Expanded(
+                            child: Text(
+                              gym['name']!,
+                              style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+                            ),
                           ),
+                          ValueListenableBuilder<List<String>>(
+                            valueListenable: favoriteItems,
+                            builder: (context, favorites, _) {
+                              final isFavorite = favorites.contains(gym['name']!);
+                              return IconButton(
+                                icon: Icon(
+                                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                                  color: isFavorite ? Colors.red : Colors.grey,
+                                ),
+                                onPressed: () => toggleFavorite(gym['name']!),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8.h),
+                      Row(
+                        children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                             decoration: BoxDecoration(
                               color: Colors.amber,
-                              borderRadius: BorderRadius.circular(10.r),
+                              borderRadius: BorderRadius.circular(8.r),
                             ),
                             child: Row(
                               children: [
@@ -102,16 +123,12 @@ class GymListScreen extends StatelessWidget {
                                 SizedBox(width: 4.w),
                                 Text(
                                   gym['rating']!,
-                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 8.h),
-                      Row(
-                        children: [
+                          SizedBox(width: 15.w),
                           const Icon(Icons.location_on, size: 16, color: Colors.blueAccent),
                           SizedBox(width: 4.w),
                           Text(gym['distance']!, style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
