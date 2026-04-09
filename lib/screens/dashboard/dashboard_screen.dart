@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wellness_app/core/theme_controller.dart';
 import '../profile/profile_screen.dart';
+import 'gym_list_screen.dart';
+import 'park_detail_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -91,9 +93,10 @@ class DashboardScreen extends StatelessWidget {
                 context,
                 'Gym Centre Near Me',
                 'Advanced equipment • Just 1.2 km away',
-                'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070&auto=format&fit=crop',
                 Icons.fitness_center,
                 Colors.orangeAccent,
+                () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GymListScreen())),
               ),
               SizedBox(height: 20.h),
 
@@ -105,6 +108,7 @@ class DashboardScreen extends StatelessWidget {
                 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop',
                 Icons.spa,
                 Colors.greenAccent,
+                () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ParkDetailScreen())),
               ),
 
               SizedBox(height: 30.h),
@@ -139,7 +143,7 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActivityCard(BuildContext context, String title, String subtitle, String imageUrl, IconData icon, Color accentColor) {
+  Widget _buildActivityCard(BuildContext context, String title, String subtitle, String imageUrl, IconData icon, Color accentColor, VoidCallback onTap) {
     return Container(
       width: double.infinity,
       height: 220.h,
@@ -188,7 +192,7 @@ class DashboardScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 15.h),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onTap,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: accentColor,
                     foregroundColor: Colors.black,
