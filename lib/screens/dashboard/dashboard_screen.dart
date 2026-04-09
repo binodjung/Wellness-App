@@ -96,7 +96,7 @@ class DashboardScreen extends StatelessWidget {
                 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070&auto=format&fit=crop',
                 Icons.fitness_center,
                 Colors.orangeAccent,
-                () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GymListScreen())),
+                () => Navigator.push(context, MaterialPageRoute(builder: (_) => GymListScreen())),
               ),
               SizedBox(height: 20.h),
 
@@ -108,7 +108,7 @@ class DashboardScreen extends StatelessWidget {
                 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop',
                 Icons.spa,
                 Colors.greenAccent,
-                () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ParkListScreen())),
+                () => Navigator.push(context, MaterialPageRoute(builder: (_) => ParkListScreen())),
               ),
 
               SizedBox(height: 30.h),
