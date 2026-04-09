@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'signup_screen.dart';
 import '../dashboard/dashboard_screen.dart';
-import '../../passwords/forgotpassword.dart'; // Temporarily keeping old path until I move it
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -47,8 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -62,7 +63,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(
                   fontSize: 28.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                ),
+              ),
+              SizedBox(height: 10.h),
+              Text(
+                'Sign in to continue your journey',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: isDark ? Colors.white54 : Colors.black54,
                 ),
               ),
               SizedBox(height: 40.h),
@@ -71,7 +79,6 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email_outlined),
                   hintText: 'Enter your email',
@@ -84,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: _passwordController,
                 obscureText: _obscurePassword,
-                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   hintText: 'Enter your password',
@@ -92,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
                     ),
                     onPressed: () {
                       setState(() {
@@ -121,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text(
                         'Remember Me',
-                        style: TextStyle(fontSize: 14.sp, color: Colors.white70),
+                        style: TextStyle(fontSize: 14.sp),
                       ),
                     ],
                   ),
@@ -129,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {
                        Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const ForgotPasswordPage()),
+                        MaterialPageRoute(builder: (_) => const ForgotPasswordScreen()),
                       );
                     },
                     child: Text(
@@ -146,12 +151,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 onPressed: _login,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey.shade900,
+                  backgroundColor: isDark ? Colors.grey.shade900 : Colors.blue.shade600,
                   foregroundColor: Colors.white,
                   minimumSize: Size(double.infinity, 55.h),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.r),
                   ),
+                  elevation: 0,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(width: 10.w),
                     Text(
                       'Login',
-                      style: TextStyle(fontSize: 18.sp),
+                      style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -182,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {},
                 style: OutlinedButton.styleFrom(
                   minimumSize: Size(double.infinity, 55.h),
-                  side: BorderSide(color: Colors.grey.shade800),
+                  side: BorderSide(color: isDark ? Colors.grey.shade800 : Colors.grey.shade300),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50.r),
                   ),
@@ -190,11 +196,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.g_mobiledata, size: 32, color: Colors.white),
+                    const Icon(Icons.g_mobiledata, size: 32),
                     SizedBox(width: 10.w),
-                    Text(
+                    const Text(
                       'Continue with Google',
-                      style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                      style: TextStyle(fontSize: 16.sp),
                     ),
                   ],
                 ),
@@ -213,13 +219,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: RichText(
                   text: TextSpan(
                     text: "Don't have an account? ",
-                    style: TextStyle(color: Colors.white70, fontSize: 14.sp),
+                    style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontSize: 14.sp),
                     children: [
                       TextSpan(
                         text: 'Create an account',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: isDark ? Colors.white : Colors.blue.shade700,
                         ),
                       ),
                     ],

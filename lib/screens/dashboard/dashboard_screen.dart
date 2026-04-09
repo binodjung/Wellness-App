@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wellness_app/core/theme_controller.dart';
 import '../profile/profile_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -7,125 +8,130 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Explore',
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hello, Binod!',
+                        style: TextStyle(
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'Stay Fit & Healthy',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: isDark ? Colors.white54 : Colors.black54,
+                        ),
+                      ),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ProfileScreen()),
-                      );
-                    },
-                    child: CircleAvatar(
-                      radius: 22.r,
-                      backgroundColor: Colors.grey.shade800,
-                      backgroundImage: const AssetImage('assets/images/profile.jpeg'),
-                    ),
+                  Row(
+                    children: [
+                      ValueListenableBuilder<ThemeMode>(
+                        valueListenable: themeNotifier,
+                        builder: (context, mode, child) {
+                          return Switch(
+                            value: mode == ThemeMode.dark,
+                            onChanged: (value) {
+                              themeNotifier.value =
+                                  value ? ThemeMode.dark : ThemeMode.light;
+                            },
+                            activeColor: Colors.amber,
+                          );
+                        },
+                      ),
+                      SizedBox(width: 10.w),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 22.r,
+                          backgroundColor: Colors.grey.shade300,
+                          backgroundImage: const AssetImage('assets/images/profile.jpeg'),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              
               SizedBox(height: 30.h),
 
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildActionCard('My Favorites', Icons.favorite_outline),
-                  ),
-                  SizedBox(width: 15.w),
-                  Expanded(
-                    child: _buildActionCard('Remind Me', Icons.notifications_none),
-                  ),
-                ],
-              ),
-
-              SizedBox(height: 30.h),
+              // Activity Cards Title
               Text(
-                "Today's Quote",
+                'Wellness Activities Near You',
                 style: TextStyle(
                   fontSize: 20.sp,
-                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               SizedBox(height: 15.h),
 
+              // Gym Center Card
+              _buildActivityCard(
+                context,
+                'Gym Centre Near Me',
+                'Advanced equipment • Just 1.2 km away',
+                'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop',
+                Icons.fitness_center,
+                Colors.orangeAccent,
+              ),
+              SizedBox(height: 20.h),
+
+              // Park for Exercise Card
+              _buildActivityCard(
+                context,
+                'Park for Exercise Near Me',
+                'Fresh air • Yoga zones • 0.5 km away',
+                'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop',
+                Icons.spa,
+                Colors.greenAccent,
+              ),
+
+              SizedBox(height: 30.h),
+
+              // Today's Quote Section
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(24.w),
+                padding: EdgeInsets.all(20.w),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.grey.shade900, Colors.black],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(24.r),
-                  border: Border.all(color: Colors.grey.shade800),
+                  color: isDark ? Colors.grey.shade900 : Colors.blue.shade50,
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Icon(Icons.format_quote, color: isDark ? Colors.white30 : Colors.blue.shade200, size: 40),
                     Text(
-                      '"Your wellness is an investment, not an expense."',
+                      'The only bad workout is the one that didn\'t happen.',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.sp,
+                        fontSize: 16.sp,
                         fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w500,
                       ),
-                    ),
-                    SizedBox(height: 15.h),
-                    Text(
-                      '- Mr. Hegho Ohber',
-                      style: TextStyle(color: Colors.white70, fontSize: 14.sp),
                     ),
                   ],
                 ),
               ),
-
-              SizedBox(height: 30.h),
-              Text(
-                'Categories',
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20.h),
-
-              _buildCategoryTile('Feeling Blessed', Icons.favorite, Colors.pinkAccent),
-              _buildCategoryTile('Pride Month', Icons.celebration, Colors.orangeAccent),
-              _buildCategoryTile('Self-worth', Icons.star, Colors.blueAccent),
-              _buildCategoryTile('Love', Icons.favorite_border, Colors.redAccent),
-              
-              SizedBox(height: 30.h),
-              Text(
-                'Health Tips',
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 20.h),
-
-              _buildCategoryTile('Breathe of Reset', Icons.air, Colors.tealAccent),
             ],
           ),
         ),
@@ -133,55 +139,68 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionCard(String title, IconData icon) {
+  Widget _buildActivityCard(BuildContext context, String title, String subtitle, String imageUrl, IconData icon, Color accentColor) {
     return Container(
-      height: 70.h,
-      alignment: Alignment.center,
+      width: double.infinity,
+      height: 220.h,
       decoration: BoxDecoration(
-        color: Colors.grey.shade900,
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.grey.shade800),
+        borderRadius: BorderRadius.circular(24.r),
+        image: DecorationImage(
+          image: NetworkImage(imageUrl),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+            Colors.black.withValues(alpha: 0.5),
+            BlendMode.darken,
+          ),
+        ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
         children: [
-          Icon(icon, color: Colors.white70, size: 20.sp),
-          SizedBox(width: 10.w),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 15.sp,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+          Padding(
+            padding: EdgeInsets.all(20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    Icon(icon, color: accentColor, size: 28),
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5.h),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14.sp,
+                  ),
+                ),
+                SizedBox(height: 15.h),
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: accentColor,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: const Text('View Details', style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCategoryTile(String title, IconData icon, Color iconColor) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 18.h),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade900,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(icon, color: iconColor, size: 24.sp),
-              SizedBox(width: 15.w),
-              Text(
-                title,
-                style: TextStyle(color: Colors.white, fontSize: 16.sp),
-              ),
-            ],
-          ),
-          Icon(Icons.arrow_forward_ios, color: Colors.white38, size: 14.sp),
         ],
       ),
     );

@@ -36,8 +36,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text("Sign Up"),
         backgroundColor: Colors.transparent,
@@ -50,13 +51,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.h),
+              SizedBox(height: 10.h),
               Text(
-                'Start your wellness\njourney today.',
+                'Create Account',
                 style: TextStyle(
                   fontSize: 28.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                ),
+              ),
+              Text(
+                'Start your wellness journey today.',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: isDark ? Colors.white54 : Colors.black54,
                 ),
               ),
               SizedBox(height: 40.h),
@@ -64,7 +71,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               // Name
               TextFormField(
                 controller: _nameController,
-                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline),
                   hintText: 'Full Name',
@@ -77,7 +83,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(color: Colors.white),
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   hintText: 'Email Address',
@@ -94,7 +99,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: _obscurePassword,
-                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   hintText: 'Password',
@@ -103,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                   ),
                 ),
-                validator: (value) => (value == null || value.length < 6) ? 'Password must be 6+ chars' : null,
+                validator: (value) => (value == null || value.length < 6) ? 'Password must be 6+ characters' : null,
               ),
               
               SizedBox(height: 40.h),
@@ -112,12 +116,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ElevatedButton(
                 onPressed: _submitForm,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey.shade900,
+                  backgroundColor: isDark ? Colors.grey.shade900 : Colors.blue.shade600,
                   foregroundColor: Colors.white,
                   minimumSize: Size(double.infinity, 55.h),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
+                  elevation: 0,
                 ),
-                child: Text('Sign Up', style: TextStyle(fontSize: 18.sp)),
+                child: Text('Sign Up', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
               ),
 
               SizedBox(height: 30.h),
@@ -133,11 +138,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: RichText(
                     text: TextSpan(
                       text: "Already have an account? ",
-                      style: TextStyle(color: Colors.white70, fontSize: 14.sp),
+                      style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontSize: 14.sp),
                       children: [
                         TextSpan(
                           text: 'Login',
-                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                          style: TextStyle(fontWeight: FontWeight.bold, color: isDark ? Colors.white : Colors.blue.shade700),
                         ),
                       ],
                     ),

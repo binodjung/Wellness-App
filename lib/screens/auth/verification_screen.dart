@@ -49,8 +49,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
         title: const Text("Verification"),
         backgroundColor: Colors.transparent,
@@ -60,11 +61,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
         padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Column(
           children: [
-            SizedBox(height: 40.h),
+            SizedBox(height: 20.h),
             Text(
-              "Enter the 4-digit code sent to your email",
+              "Verify Code",
+              style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              "Enter the 4-digit code sent to your email address.",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18.sp, color: Colors.white70),
+              style: TextStyle(fontSize: 14.sp, color: isDark ? Colors.white54 : Colors.black54),
             ),
             SizedBox(height: 40.h),
             Row(
@@ -78,12 +84,12 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     maxLength: 1,
-                    style: const TextStyle(color: Colors.white, fontSize: 24),
+                    style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
                     decoration: InputDecoration(
                       counterText: "",
                       filled: true,
-                      fillColor: Colors.grey.shade900,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      fillColor: isDark ? Colors.grey.shade900 : Colors.grey.shade100,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(16.r)),
                     ),
                     onChanged: (value) {
                       if (value.isNotEmpty && index < 3) FocusScope.of(context).nextFocus();
@@ -97,7 +103,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               onPressed: _canResend ? _startTimer : null,
               child: Text(
                 _canResend ? "Resend Code" : "Resend in ${_secondsRemaining}s",
-                style: TextStyle(color: _canResend ? Colors.blue : Colors.grey),
+                style: TextStyle(color: _canResend ? Colors.blueAccent : Colors.grey, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(height: 40.h),
@@ -109,12 +115,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey.shade900,
+                backgroundColor: isDark ? Colors.grey.shade900 : Colors.blue.shade600,
                 foregroundColor: Colors.white,
                 minimumSize: Size(double.infinity, 55.h),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
+                elevation: 0,
               ),
-              child: Text('Verify', style: TextStyle(fontSize: 18.sp)),
+              child: Text('Verify Code', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
             ),
           ],
         ),

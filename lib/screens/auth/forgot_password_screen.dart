@@ -7,10 +7,11 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("Forgot Password"),
+        title: const Text("Reset Password"),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -21,20 +22,26 @@ class ForgotPasswordScreen extends StatelessWidget {
           children: [
             SizedBox(height: 20.h),
             Text(
-              "Please enter your email to\nreset your password.",
+              "Forgot Password?",
               style: TextStyle(
-                fontSize: 22.sp,
+                fontSize: 28.sp,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Text(
+              "Enter your email address and we'll send you a 4-digit code to reset your password.",
+              style: TextStyle(
+                fontSize: 14.sp,
+                color: isDark ? Colors.white54 : Colors.black54,
               ),
             ),
             SizedBox(height: 40.h),
 
             const TextField(
-              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.email_outlined),
-                hintText: 'Enter your email',
+                hintText: 'Email Address',
               ),
             ),
             SizedBox(height: 40.h),
@@ -47,12 +54,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey.shade900,
+                backgroundColor: isDark ? Colors.grey.shade900 : Colors.blue.shade600,
                 foregroundColor: Colors.white,
                 minimumSize: Size(double.infinity, 55.h),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.r)),
+                elevation: 0,
               ),
-              child: Text('Send Code', style: TextStyle(fontSize: 18.sp)),
+              child: Text('Get Link', style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
