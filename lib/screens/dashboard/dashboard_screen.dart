@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wellness_app/core/theme_controller.dart';
 import '../profile/profile_screen.dart';
+import 'gym_list_screen.dart';
 import 'park_list_screen.dart';
 import 'park_detail_screen.dart';
 
