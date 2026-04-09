@@ -14,13 +14,6 @@ class GymListScreen extends StatelessWidget {
       'details': 'Modern equipment, personal trainers, and yoga studio.',
     },
     {
-      'name': 'Iron Works Gym',
-      'distance': '1.2 km',
-      'rating': '4.9',
-      'image': 'https://images.unsplash.com/photo-1581009146145-b5ef03a7403f?q=80&w=2070&auto=format&fit=crop', // Real industrial gym photo
-      'details': 'Heavy lifting, powerlifting racks, and expert strength coaching.',
-    },
-    {
       'name': 'Power Zone Gym',
       'distance': '1.5 km',
       'rating': '4.5',
@@ -112,10 +105,10 @@ class GymListScreen extends StatelessWidget {
                       Row(
                         children: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                             decoration: BoxDecoration(
                               color: Colors.amber,
-                              borderRadius: BorderRadius.circular(8.r),
+                              borderRadius: BorderRadius.circular(10.r),
                             ),
                             child: Row(
                               children: [
@@ -123,7 +116,7 @@ class GymListScreen extends StatelessWidget {
                                 SizedBox(width: 4.w),
                                 Text(
                                   gym['rating']!,
-                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 12),
+                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
                                 ),
                               ],
                             ),

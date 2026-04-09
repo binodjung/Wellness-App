@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wellness_app/core/theme_controller.dart';
 import '../profile/profile_screen.dart';
-import 'gym_list_screen.dart';
+import 'park_list_screen.dart';
 import 'park_detail_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -108,7 +108,7 @@ class DashboardScreen extends StatelessWidget {
                 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop',
                 Icons.spa,
                 Colors.greenAccent,
-                () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ParkDetailScreen())),
+                () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ParkListScreen())),
               ),
 
               SizedBox(height: 30.h),
