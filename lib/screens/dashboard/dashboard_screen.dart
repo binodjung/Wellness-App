@@ -94,7 +94,7 @@ class DashboardScreen extends StatelessWidget {
                 context,
                 'Gym Centre Near Me',
                 'Advanced equipment • Just 1.2 km away',
-                'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070&auto=format&fit=crop',
+                'assets/images/park1.png',
                 Icons.fitness_center,
                 Colors.orangeAccent,
                 () => Navigator.push(context, MaterialPageRoute(builder: (_) => GymListScreen())),
@@ -106,7 +106,7 @@ class DashboardScreen extends StatelessWidget {
                 context,
                 'Park for Exercise Near Me',
                 'Fresh air • Yoga zones • 0.5 km away',
-                'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop',
+                'assets/images/park2.png',
                 Icons.spa,
                 Colors.greenAccent,
                 () => Navigator.push(context, MaterialPageRoute(builder: (_) => ParkListScreen())),
@@ -151,7 +151,7 @@ class DashboardScreen extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24.r),
         image: DecorationImage(
-          image: NetworkImage(imageUrl),
+          image: AssetImage(imageUrl),
           fit: BoxFit.cover,
           colorFilter: ColorFilter.mode(
             Colors.black.withValues(alpha: 0.5),

@@ -13,7 +13,7 @@ class ParkListScreen extends StatelessWidget {
       'distance': '0.5 km',
       'rating': '4.5',
       'reviews': '265',
-      'image': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop',
+      'image': 'assets/images/park1.png',
       'description': 'Central Green Park is the heart of the city\'s fitness scene. It features a professional rubberized 2km jogging track and a massive open-air yoga pavillion.',
     },
     {
@@ -22,7 +22,7 @@ class ParkListScreen extends StatelessWidget {
       'distance': '1.2 km',
       'rating': '4.8',
       'reviews': '150',
-      'image': 'https://images.unsplash.com/photo-1596434413175-9e6ecb009e0b?q=80&w=2070&auto=format&fit=crop',
+      'image': 'assets/images/park2.png',
       'description': 'Perched on the hills, Skyline View Park offers breathtaking city views while you exercise. It is famous for its outdoor high-intensity training equipment.',
     },
     {
@@ -31,7 +31,7 @@ class ParkListScreen extends StatelessWidget {
       'distance': '2.1 km',
       'rating': '4.2',
       'reviews': '120',
-      'image': 'https://images.unsplash.com/photo-1588619623828-56b068297b81?q=80&w=2071&auto=format&fit=crop',
+      'image': 'assets/images/park3.png',
       'description': 'Experience peace as you run alongside the river. This park provides a cool breeze and shaded benches for post-workout recovery.',
     },
     {
@@ -40,7 +40,7 @@ class ParkListScreen extends StatelessWidget {
       'distance': '3.5 km',
       'rating': '4.7',
       'reviews': '310',
-      'image': 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?q=80&w=2070&auto=format&fit=crop',
+      'image': 'assets/images/park4.png',
       'description': 'A true escape into nature. Echo Valley is dense with trees and features a challenging uphill running course for seasoned athletes.',
     },
   ];
@@ -53,7 +53,6 @@ class ParkListScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Filter Chips Row
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
@@ -137,7 +136,7 @@ class ParkListScreen extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
-                      child: Image.network(
+                      child: Image.asset(
                         parkData['image']!,
                         height: 160.h,
                         width: double.infinity,

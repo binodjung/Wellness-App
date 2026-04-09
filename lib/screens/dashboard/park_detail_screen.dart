@@ -22,7 +22,7 @@ class ParkDetailScreen extends StatelessWidget {
             // Park Image
             Hero(
               tag: park['name']!,
-              child: Image.network(
+              child: Image.asset(
                 park['image']!,
                 height: 280.h,
                 width: double.infinity,
