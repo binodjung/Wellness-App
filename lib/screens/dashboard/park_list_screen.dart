@@ -14,30 +14,34 @@ class ParkListScreen extends StatelessWidget {
       'rating': '4.5',
       'reviews': '265',
       'image': 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2040&auto=format&fit=crop',
+      'description': 'Central Green Park is the heart of the city\'s fitness scene. It features a professional rubberized 2km jogging track and a massive open-air yoga pavillion.',
     },
     {
-      'name': 'Skyline Park',
+      'name': 'Skyline View Park',
       'location': 'Upper East Side',
       'distance': '1.2 km',
       'rating': '4.8',
       'reviews': '150',
       'image': 'https://images.unsplash.com/photo-1596434413175-9e6ecb009e0b?q=80&w=2070&auto=format&fit=crop',
+      'description': 'Perched on the hills, Skyline View Park offers breathtaking city views while you exercise. It is famous for its outdoor high-intensity training equipment.',
     },
     {
-      'name': 'Riverside Trail',
+      'name': 'Riverside Trail Park',
       'location': 'West Coast',
       'distance': '2.1 km',
       'rating': '4.2',
       'reviews': '120',
       'image': 'https://images.unsplash.com/photo-1588619623828-56b068297b81?q=80&w=2071&auto=format&fit=crop',
+      'description': 'Experience peace as you run alongside the river. This park provides a cool breeze and shaded benches for post-workout recovery.',
     },
     {
-      'name': 'Echo Valley Park',
+      'name': 'Echo Valley Nature Park',
       'location': 'North Hills',
       'distance': '3.5 km',
       'rating': '4.7',
       'reviews': '310',
       'image': 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?q=80&w=2070&auto=format&fit=crop',
+      'description': 'A true escape into nature. Echo Valley is dense with trees and features a challenging uphill running course for seasoned athletes.',
     },
   ];
 
@@ -46,14 +50,10 @@ class ParkListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Parks Near Me'),
-        actions: [
-          IconButton(icon: const Icon(Icons.sort), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.filter_list), onPressed: () {}),
-        ],
       ),
       body: Column(
         children: [
-          // Filter Chips Row (as seen in image)
+          // Filter Chips Row
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
@@ -64,8 +64,6 @@ class ParkListScreen extends StatelessWidget {
                 _buildFilterChip('Filter', Icons.tune),
                 SizedBox(width: 10.w),
                 _buildFilterChip('Type', Icons.nature),
-                SizedBox(width: 10.w),
-                _buildFilterChip('Distance', Icons.location_on),
               ],
             ),
           ),
@@ -95,146 +93,134 @@ class ParkListScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: Colors.pink.withValues(alpha: 0.05),
+        color: Colors.blueAccent.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: Colors.pink.withValues(alpha: 0.1)),
+        border: Border.all(color: Colors.blueAccent.withValues(alpha: 0.1)),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: Colors.pinkAccent),
+          Icon(icon, size: 16, color: Colors.blueAccent),
           SizedBox(width: 6.w),
-          Text(label, style: TextStyle(fontSize: 12.sp, color: Colors.black87)),
-          Icon(Icons.keyboard_arrow_down, size: 16, color: Colors.black54),
+          Text(label, style: TextStyle(fontSize: 12.sp)),
+          const Icon(Icons.keyboard_arrow_down, size: 16, color: Colors.grey),
         ],
       ),
     );
   }
 
-  Widget _buildParkCard(BuildContext context, Map<String, String> park) {
+  Widget _buildParkCard(BuildContext context, Map<String, String> parkData) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ParkDetailScreen())),
-      child: Container(
-        decoration: BoxDecoration(
-          color: isDark ? Colors.grey.shade900 : Colors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            if (!isDark)
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
-              ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image with Favorite
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
-                  child: Image.network(
-                    park['image']!,
-                    height: 160.h,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ParkDetailScreen(park: parkData))),
+      child: Hero(
+        tag: parkData['name']!,
+        child: Container(
+          decoration: BoxDecoration(
+            color: isDark ? Colors.grey.shade900 : Colors.white,
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: [
+              if (!isDark)
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
                 ),
-                Positioned(
-                  top: 8.h,
-                  right: 8.w,
-                  child: ValueListenableBuilder<List<String>>(
-                    valueListenable: favoriteItems,
-                    builder: (context, favorites, _) {
-                      final isFavorite = favorites.contains(park['name']!);
-                      return Container(
-                        padding: EdgeInsets.all(4.w),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
+            ],
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+                      child: Image.network(
+                        parkData['image']!,
+                        height: 160.h,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Positioned(
+                      top: 8.h,
+                      right: 8.w,
+                      child: ValueListenableBuilder<List<String>>(
+                        valueListenable: favoriteItems,
+                        builder: (context, favorites, _) {
+                          final isFavorite = favorites.contains(parkData['name']!);
+                          return Container(
+                            padding: EdgeInsets.all(4.w),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: GestureDetector(
+                              onTap: () => toggleFavorite(parkData['name']!),
+                              child: Icon(
+                                isFavorite ? Icons.favorite : Icons.favorite_border,
+                                color: Colors.pinkAccent,
+                                size: 20,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.all(12.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        parkData['name']!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
                         ),
-                        child: GestureDetector(
-                          onTap: () => toggleFavorite(park['name']!),
-                          child: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: Colors.pinkAccent,
-                            size: 20,
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        parkData['location']!,
+                        style: TextStyle(fontSize: 12.sp, color: Colors.grey),
+                      ),
+                      SizedBox(height: 8.h),
+                      Row(
+                        children: [
+                          Text(
+                            parkData['distance']!,
+                            style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.bold, color: Colors.blueAccent),
                           ),
-                        ),
-                      );
-                    },
+                        ],
+                      ),
+                      SizedBox(height: 8.h),
+                      Row(
+                        children: [
+                          Text(
+                            parkData['rating']!,
+                            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(width: 4.w),
+                          const Icon(Icons.star, size: 14, color: Colors.orange),
+                          SizedBox(width: 4.w),
+                          Text(
+                            '(${parkData['reviews']})',
+                            style: TextStyle(fontSize: 11.sp, color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            
-            Padding(
-              padding: EdgeInsets.all(12.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    park['name']!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    park['location']!,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(height: 8.h),
-                  Row(
-                    children: [
-                      Text(
-                        park['distance']!,
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueAccent,
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        'Nearby',
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          color: Colors.grey,
-                          decoration: TextDecoration.lineThrough,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.h),
-                  Row(
-                    children: [
-                      Text(
-                        park['rating']!,
-                        style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(width: 4.w),
-                      const Icon(Icons.star, size: 14, color: Colors.orange),
-                      SizedBox(width: 4.w),
-                      Text(
-                        '(${park['reviews']} Review)',
-                        style: TextStyle(fontSize: 11.sp, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
