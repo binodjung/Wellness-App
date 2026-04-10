@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class QuoteDetailScreen extends StatefulWidget {
+  const QuoteDetailScreen({super.key});
+
   @override
-  _QuoteDetailScreenState createState() => _QuoteDetailScreenState();
+  State<QuoteDetailScreen> createState() => _QuoteDetailScreenState();
 }
 
 class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
@@ -35,9 +37,11 @@ class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
       Uri.parse(quotes[index]['videoUrl']!),
     )
       ..initialize().then((_) {
-        setState(() {});
-        _controller.setLooping(true);
-        _controller.play();
+        if (mounted) {
+          setState(() {});
+          _controller.setLooping(true);
+          _controller.play();
+        }
       });
   }
 
@@ -89,7 +93,7 @@ class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
                 ),
               ),
             )
-                : Center(child: CircularProgressIndicator()),
+                : const Center(child: CircularProgressIndicator(color: Colors.white)),
 
             // Header row
             SafeArea(
@@ -98,8 +102,11 @@ class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                    Text("Motivation",
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    const Text("Motivation",
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -108,7 +115,7 @@ class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
                       children: [
                         Text(
                           '${_currentIndex + 1}/${quotes.length}',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: const TextStyle(color: Colors.white, fontSize: 16),
                         ),
                         IconButton(
                           icon: Icon(
@@ -127,26 +134,26 @@ class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
             // Quote + author (centered)
             Positioned(
               bottom: 160,
-              left: 20,
-              right: 20,
+              left: 24,
+              right: 24,
               child: Column(
                 children: [
                   Text(
                     quotes[_currentIndex]['quote']!,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        shadows: [Shadow(blurRadius: 8, color: Colors.black)]),
+                        shadows: [Shadow(blurRadius: 10, color: Colors.black)]),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   Text(
                     '- ${quotes[_currentIndex]['author']}',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Colors.white70,
-                        fontSize: 16,
+                        fontSize: 18,
                         shadows: [Shadow(blurRadius: 5, color: Colors.black)]),
                   ),
                 ],
@@ -155,31 +162,23 @@ class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
 
             // Bottom actions
             Positioned(
-              bottom: 20,
+              bottom: 30,
               left: 0,
               right: 0,
               child: Column(
                 children: [
-                  Icon(Icons.keyboard_arrow_up, size: 30, color: Colors.white),
-                  Text("Swipe up",
+                  const Icon(Icons.keyboard_arrow_up, size: 30, color: Colors.white),
+                  const Text("Swipe up",
                       style: TextStyle(color: Colors.white70, fontSize: 14)),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.favorite_border, color: Colors.white),
-                        onPressed: () {
-                          // TODO: Handle favorite
-                        },
-                      ),
-                      SizedBox(width: 20),
-                      IconButton(
-                        icon: Icon(Icons.tag, color: Colors.white),
-                        onPressed: () {
-                          // TODO: Handle tag
-                        },
-                      ),
+                      _buildBottomAction(Icons.favorite_border, "Favorite"),
+                      const SizedBox(width: 40),
+                      _buildBottomAction(Icons.tag, "Topic"),
+                      const SizedBox(width: 40),
+                      _buildBottomAction(Icons.share_outlined, "Share"),
                     ],
                   ),
                 ],
@@ -188,6 +187,16 @@ class _QuoteDetailScreenState extends State<QuoteDetailScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBottomAction(IconData icon, String label) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.white, size: 28),
+        const SizedBox(height: 4),
+        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 12)),
+      ],
     );
   }
 }
